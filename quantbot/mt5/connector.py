@@ -69,3 +69,19 @@ class MT5Connector:
             "profit": 0.0,
             "status": "demo_stub",
         }
+
+    def get_status_summary(self) -> dict[str, Any]:
+        if self.is_connected:
+            return {
+                "connected": True,
+                "mode": "live",
+                "login": self.login,
+                "server": self.server,
+            }
+
+        return {
+            "connected": False,
+            "mode": "demo_stub",
+            "login": self.login,
+            "server": self.server,
+        }

@@ -4,3 +4,6 @@
 2026-07-08 12:30:58,154 INFO Demo completed successfully
 2026-07-08 12:38:29,329 INFO QuantBot demo started
 2026-07-08 12:38:29,329 INFO Demo completed successfully
+2026-07-08 12:53:46,446 INFO QuantBot demo started
+2026-07-08 12:53:46,446 INFO MT5 connection status: {'connected': False, 'mode': 'demo_stub', 'login': None, 'server': None}
+2026-07-08 12:53:46,447 INFO Demo completed successfully

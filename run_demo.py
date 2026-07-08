@@ -6,6 +6,7 @@ from quantbot.backtest.engine import BacktestEngine
 from quantbot.execution.order_manager import Order, OrderManager
 from quantbot.journal.trade_journal import TradeJournal
 from quantbot.monitor.terminal_dashboard import TerminalDashboard
+from quantbot.mt5.connector import MT5Connector
 from quantbot.risk.position_sizing import PositionSizer
 from quantbot.risk.risk_manager import RiskManager
 from quantbot.strategy.regime import RegimeStrategy
@@ -21,10 +22,20 @@ def main() -> None:
 
     demo_login = get_env_value("MT5_LOGIN")
     demo_server = get_env_value("MT5_SERVER")
+    connector = MT5Connector(
+        terminal_path=get_env_value("MT5_TERMINAL_PATH"),
+        login=int(demo_login) if demo_login and demo_login.isdigit() else None,
+        password=get_env_value("MT5_PASSWORD"),
+        server=demo_server,
+    )
+    mt5_connected = connector.connect()
+    mt5_status = connector.get_status_summary()
+
     if demo_login:
         logger.info(f"Demo MT5 login configured: {demo_login}")
     if demo_server:
         logger.info(f"Demo MT5 server configured: {demo_server}")
+    logger.info(f"MT5 connection status: {mt5_status}")
 
     strategy = RegimeStrategy(
         fast_ema=config["strategy"].get("fast_ema", 12),
@@ -61,6 +72,7 @@ def main() -> None:
     dashboard.update(balance=10000.0, equity=10000.0 + 120.0, open_orders=manager.get_order_summary()["open_orders"], trade_allowed=trade_allowed)
 
     print(f"Loaded config for {len(config.get('symbols', []))} symbols")
+    print(f"MT5 status: {mt5_status}")
     print(f"Strategy signal: {signal}")
     print(f"Recommended lot size: {lot_size}")
     print(f"Backtest metrics: {metrics}")
