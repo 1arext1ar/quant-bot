@@ -1,0 +1,31 @@
+{
+  "account": {
+    "risk_per_trade": 0.01,
+    "max_daily_loss": 0.02,
+    "max_daily_profit": 0.04,
+    "initial_balance": 10000.0
+  },
+  "strategy": {
+    "fast_ema": 12,
+    "slow_ema": 26,
+    "atr_period": 14,
+    "entry_zscore": 1.8
+  },
+  "risk": {
+    "min_lot": 0.01,
+    "max_lot": 5.0,
+    "lot_step": 0.01
+  },
+  "symbols": [
+    {
+      "name": "EURUSD",
+      "timeframe": "H1"
+    }
+  ],
+  "mt5": {
+    "terminal_path": "C:/Program Files/MetaTrader 5/terminal64.exe",
+    "login": 0,
+    "password": "",
+    "server": ""
+  }
+}
