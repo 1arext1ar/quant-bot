@@ -39,15 +39,20 @@ python -m pip install -e .
 
 ## Running
 
-```bat
-python run_demo.py
-```
+- Demo / validation:
+  ```bat
+  python run_demo.py
+  ```
 
-Or on Windows:
+- Live monitoring / execution entrypoint:
+  ```bat
+  python live_runner.py
+  ```
 
-```bat
-run_dashboard.bat
-```
+- Windows launcher:
+  ```bat
+  run_dashboard.bat
+  ```
 
 ## Configuration
 
