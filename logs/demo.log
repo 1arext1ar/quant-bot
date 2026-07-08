@@ -1,0 +1,3 @@
+2026-07-08 13:21:15,129 INFO QuantBot demo started
+2026-07-08 13:21:15,129 INFO MT5 connection status: {'connected': False, 'mode': 'demo_stub', 'login': None, 'server': None}
+2026-07-08 13:21:15,130 WARNING MT5 not connected; live order not sent

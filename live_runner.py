@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from run_demo import main
+from quantbot.trading.runner import TradingRunner
 
 
 if __name__ == "__main__":
-    main()
+    runner = TradingRunner()
+    runner.run(iterations=3, interval_seconds=2)

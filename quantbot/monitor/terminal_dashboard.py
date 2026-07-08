@@ -26,6 +26,7 @@ class TerminalDashboard:
             "status": self._state.get("mt5_status", "unknown"),
             "login": self._state.get("mt5_login", "-"),
             "server": self._state.get("mt5_server", "-"),
+            "last_error": self._state.get("mt5_last_error", "-"),
         }
         trading = {
             "signal": self._state.get("signal", "hold"),
