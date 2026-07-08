@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+import time
 from pathlib import Path
 
 from quantbot.backtest.engine import BacktestEngine
@@ -17,6 +19,7 @@ from quantbot.utils.logging import TradingLogger
 
 def main() -> None:
     config = load_config(Path("config/example_config.json"))
+    run_forever = True
     logger = TradingLogger("logs/demo.log")
     logger.info("QuantBot demo started")
 
@@ -71,12 +74,35 @@ def main() -> None:
     dashboard = TerminalDashboard()
     dashboard.update(balance=10000.0, equity=10000.0 + 120.0, open_orders=manager.get_order_summary()["open_orders"], trade_allowed=trade_allowed)
 
-    print(f"Loaded config for {len(config.get('symbols', []))} symbols")
-    print(f"MT5 status: {mt5_status}")
-    print(f"Strategy signal: {signal}")
-    print(f"Recommended lot size: {lot_size}")
-    print(f"Backtest metrics: {metrics}")
-    print(dashboard.render())
+    while run_forever:
+        try:
+            os.system("cls" if os.name == "nt" else "clear")
+            dashboard.update(
+                balance=10000.0,
+                equity=10000.0 + 120.0,
+                margin=500.0,
+                free_margin=9500.0,
+                mt5_status=mt5_status["mode"],
+                mt5_login=mt5_status.get("login"),
+                mt5_server=mt5_status.get("server"),
+                signal=signal,
+                lot=lot_size,
+                open_orders=manager.get_order_summary()["open_orders"],
+                trade_allowed=trade_allowed,
+                runtime="live",
+                last_update=time.strftime("%H:%M:%S"),
+                messages=["system running", "risk checks active"],
+            )
+            print(dashboard.render())
+            print("-" * 40)
+            time.sleep(5)
+        except KeyboardInterrupt:
+            logger.warning("Interrupted by user")
+            break
+        except Exception as exc:  # pragma: no cover - defensive runtime guard
+            logger.error(f"Runtime loop error: {exc}")
+            time.sleep(5)
+
     logger.info("Demo completed successfully")
 
 
