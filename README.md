@@ -1,75 +1,74 @@
 # QuantBot
 
-QuantBot is a professional-grade quantitative trading system scaffold designed for Windows 10/11, Python 3.12+, and MetaTrader 5 integration. The project focuses on modularity, low resource usage, risk management, and a clean architecture suitable for expansion into a long-running live trading system.
+QuantBot is a practical trading system foundation for Windows 10/11, Python 3.12+, and MetaTrader 5. The project is structured so it can be used for demo testing first and then evolved toward live operation with strict risk controls and a lightweight terminal dashboard.
 
 ## What is included
 
-- Modular Python package structure with clear separation of concerns
-- JSON-based configuration for symbols, risk, strategy, and MT5 settings
-- Risk-based position sizing module
-- Lightweight regime-based strategy scaffold
-- MT5 connector abstraction for future live integration
-- Demo runner and automated tests
+- modular Python package structure
+- configuration-driven risk and strategy controls
+- position sizing and risk guardrails
+- MT5 connector abstraction with safe fallback behavior
+- trade journaling and terminal monitoring
+- automated tests for core components
 
 ## Project structure
 
-- [quantbot](quantbot) - trading engine package
-  - [quantbot/strategy](quantbot/strategy) - strategy modules
+- [quantbot](quantbot) - core trading engine package
+  - [quantbot/strategy](quantbot/strategy) - strategy logic
   - [quantbot/risk](quantbot/risk) - risk and position sizing
-  - [quantbot/mt5](quantbot/mt5) - MetaTrader 5 connector layer
-  - [quantbot/utils](quantbot/utils) - shared helpers
+  - [quantbot/mt5](quantbot/mt5) - MetaTrader 5 integration layer
+  - [quantbot/utils](quantbot/utils) - helpers and environment loading
 - [config](config) - configuration examples
-- [tests](tests) - smoke tests for core logic
-- [run_demo.py](run_demo.py) - simple demonstration entrypoint
+- [tests](tests) - regression tests
+- [run_demo.py](run_demo.py) - demo and dashboard entrypoint
+- [run_dashboard.bat](run_dashboard.bat) - Windows launcher
 
 ## Requirements
 
 - Python 3.12+
 - Windows 10/11 64-bit
 - MetaTrader 5 installed for real trading integration
-- Optional: MetaTrader5 Python package for full broker connectivity
+- MetaTrader5 Python package for live broker connectivity
 
 ## Installation
 
-```bash
+```bat
 python -m pip install -r requirements.txt
 python -m pip install -e .
 ```
 
-## Run the demo
+## Running
 
-```bash
+```bat
 python run_demo.py
+```
+
+Or on Windows:
+
+```bat
+run_dashboard.bat
 ```
 
 ## Configuration
 
-Edit [config/example_config.json](config/example_config.json) to adjust:
+Edit [.env.example](.env.example) and create a local .env with:
 
-- risk per trade
-- daily stop limits
-- lot size bounds
-- symbols and timeframes
-- MT5 credentials and terminal path
+- MT5 terminal path
+- MT5 login
+- MT5 password
+- MT5 server
+- risk and sizing settings
 
-## Architecture notes
+## Live trading readiness
 
-The current scaffold follows a pragmatic design:
+The system is now organized around the following live-trading principles:
 
-- KISS and SOLID principles
-- small modules with clear responsibilities
-- configuration-driven behavior
-- testable core logic before live connectivity
-- a path for adding multi-symbol orchestration, logging, backtesting, and MT5 order management later
+- strict risk limits before order submission
+- configuration-driven behavior rather than hard-coded parameters
+- safe fallback when broker connectivity is unavailable
+- structured logging and journaling for auditability
+- low-overhead terminal monitoring for long-running operation
 
-## Next steps for a production-ready system
+## Recommended next step
 
-To evolve this scaffold into a robust live trading platform, the next milestones are:
-
-1. Add a real MetaTrader5 connector and order execution layer
-2. Implement a market data adapter and multi-timeframe data pipeline
-3. Add trade journaling, telemetry, and structured logging
-4. Add a backtest engine and forward-test runner
-5. Add drawdown protection, daily loss controls, and live monitoring dashboards
-
-This project is intentionally conservative and modular so it can be maintained reliably over time.
+Use the project first in a MetaTrader 5 demo account, validate the connection and risk controls, then move to a live account only after stable behavior is confirmed.
