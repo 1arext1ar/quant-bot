@@ -10,6 +10,7 @@ from quantbot.risk.position_sizing import PositionSizer
 from quantbot.risk.risk_manager import RiskManager
 from quantbot.strategy.regime import RegimeStrategy
 from quantbot.utils.config import load_config
+from quantbot.utils.env_loader import get_env_value
 from quantbot.utils.logging import TradingLogger
 
 
@@ -17,6 +18,13 @@ def main() -> None:
     config = load_config(Path("config/example_config.json"))
     logger = TradingLogger("logs/demo.log")
     logger.info("QuantBot demo started")
+
+    demo_login = get_env_value("MT5_LOGIN")
+    demo_server = get_env_value("MT5_SERVER")
+    if demo_login:
+        logger.info(f"Demo MT5 login configured: {demo_login}")
+    if demo_server:
+        logger.info(f"Demo MT5 server configured: {demo_server}")
 
     strategy = RegimeStrategy(
         fast_ema=config["strategy"].get("fast_ema", 12),
